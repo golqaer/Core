@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Database.Abstracts;
 using Database.Entities;
+using DTO.AppSettings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Options;
 
 namespace Database
 {
@@ -10,6 +12,7 @@ namespace Database
     {
         public DbSet<User> Users { get; set; }
 
+        private readonly IOptions<SystemUserSettings> _sysUser;
 
         public Context(DbContextOptions<Context> options) : base(options)
         {
@@ -65,6 +68,18 @@ namespace Database
                     indexesToAdd.ForEach(ind => entity.HasIndex(ind.props).HasDatabaseName(ind.name).IsUnique(ind.isUnique));
                 })
                 ;
+
+            modelBuilder.Entity<User>().Property(u => u.Admin).HasDefaultValue(false);
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = _sysUser.Value.UserId,
+                    LastUpdateTick = 0,
+                    UserName = _sysUser.Value.UserName,
+                    Password = _sysUser.Value.Password,
+                    Admin = _sysUser.Value.IsAdmin,
+                }
+            );
 
             base.OnModelCreating(modelBuilder);
         }
