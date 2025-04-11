@@ -1,6 +1,9 @@
+using Database.Entities;
 using DTO.AppSettings;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Services.DbTransactions.Abstracts;
 
 namespace WebApi.Controllers
 {
@@ -14,15 +17,21 @@ namespace WebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ITransactionScopeFactory _scopeFactory;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IOptions<JwtAppSettings> options)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ITransactionScopeFactory scopeFactory)
         {
             _logger = logger;
+            _scopeFactory = scopeFactory;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            using var scope = _scopeFactory.Create();
+
+            var usrs = scope.GetRepository<User>().GetAll().ToList();
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
