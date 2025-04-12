@@ -7,14 +7,22 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using Serilog;
 
 namespace Services;
 
 public static partial class Initializer
 {
-    public static IServiceCollection AddCoreService(this IServiceCollection services, IConfiguration config)
+    public static IServiceCollection AddCoreService(this IServiceCollection services, IConfiguration config, IHostBuilder host)
     {
+        host.UseSerilog();
+
         services.Configure<SystemUserSettings>(config.GetSection("SystemUser"));
+
+        Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Information()
+            .WriteTo.File(Path.Combine(AppContext.BaseDirectory, "logs", "app.log"), rollingInterval: RollingInterval.Day)
+            .CreateLogger();
 
         services.AddControllers();
         services.AddDbContext<Context>(options =>

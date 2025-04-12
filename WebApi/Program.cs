@@ -1,5 +1,6 @@
 
 using DTO.AppSettings;
+using Serilog;
 using Services;
 
 namespace WebApi
@@ -12,7 +13,7 @@ namespace WebApi
             // Add services to the container.
 
             builder.Services
-                .AddCoreService(builder.Configuration)
+                .AddCoreService(builder.Configuration, builder.Host)
                 ;
 
             var app = builder.Build();

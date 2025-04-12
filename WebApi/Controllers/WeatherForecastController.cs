@@ -28,6 +28,18 @@ namespace WebApi.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            _logger.LogInformation("Hello World");
+            _logger.LogError("Error !!!");
+
+            try
+            {
+                throw new Exception("Exception ERROR");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "my msg");
+            }
+
             using var scope = _scopeFactory.Create();
 
             var usrs = scope.GetRepository<User>().GetAll().ToList();
