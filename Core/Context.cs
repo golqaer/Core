@@ -14,8 +14,9 @@ namespace Database
 
         private readonly IOptions<SystemUserSettings> _sysUser;
 
-        public Context(DbContextOptions<Context> options) : base(options)
+        public Context(DbContextOptions<Context> options, IOptions<SystemUserSettings> sysUser) : base(options)
         {
+            _sysUser = sysUser;
             //Database.EnsureDeleted();
             Database.EnsureCreated();
         }

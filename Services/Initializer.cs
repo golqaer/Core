@@ -14,6 +14,8 @@ public static partial class Initializer
 {
     public static IServiceCollection AddCoreService(this IServiceCollection services, IConfiguration config)
     {
+        services.Configure<SystemUserSettings>(config.GetSection("SystemUser"));
+
         services.AddControllers();
         services.AddDbContext<Context>(options =>
             options.UseSqlServer(config["DbConnectionString"]))

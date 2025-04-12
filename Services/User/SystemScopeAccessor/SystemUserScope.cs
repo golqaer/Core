@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using DTO.Database;
+using DTO.AppSettings;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
