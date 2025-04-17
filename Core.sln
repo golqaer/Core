@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{1F020C05-C691-43C2-9176-646A825661F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{1BE1B84B-58A7-49AA-91C6-3A22C86E0289}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "AuthServer\IdentityServer.csproj", "{5F458493-307C-40C8-B4B1-0EDB4EF27E86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{1F020C05-C691-43C2-9176-646A825661F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F020C05-C691-43C2-9176-646A825661F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F020C05-C691-43C2-9176-646A825661F7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1BE1B84B-58A7-49AA-91C6-3A22C86E0289}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1BE1B84B-58A7-49AA-91C6-3A22C86E0289}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1BE1B84B-58A7-49AA-91C6-3A22C86E0289}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1BE1B84B-58A7-49AA-91C6-3A22C86E0289}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F458493-307C-40C8-B4B1-0EDB4EF27E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F458493-307C-40C8-B4B1-0EDB4EF27E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F458493-307C-40C8-B4B1-0EDB4EF27E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F458493-307C-40C8-B4B1-0EDB4EF27E86}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

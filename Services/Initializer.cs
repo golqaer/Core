@@ -13,27 +13,27 @@ namespace Services;
 
 public static partial class Initializer
 {
-    public static IServiceCollection AddCoreService(this IServiceCollection services, IConfiguration config, IHostBuilder host)
+    public static WebApplicationBuilder AddCoreServices<TContext>(this WebApplicationBuilder builder) where TContext : Context
     {
-        host.UseSerilog();
+        builder.Host.UseSerilog();
 
-        services.Configure<SystemUserSettings>(config.GetSection("SystemUser"));
+        builder.Services.Configure<SystemUserSettings>(builder.Configuration.GetSection("SystemUser"));
 
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.File(Path.Combine(AppContext.BaseDirectory, "logs", "app.log"), rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        services.AddControllers();
-        services.AddDbContext<Context>(options =>
-            options.UseSqlServer(config["DbConnectionString"]))
+        builder.Services.AddControllers();
+        builder.Services.AddDbContext<Context, TContext>(options =>
+            options.UseSqlServer(builder.Configuration["DbConnectionString"]))
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddHttpContextAccessor()
             .AddServiceInjection()
             ;
 
-        return services;
+        return builder;
     }
 
     public static IApplicationBuilder UserCoreService(this IApplicationBuilder app, IWebHostEnvironment env)

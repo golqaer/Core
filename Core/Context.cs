@@ -12,13 +12,20 @@ namespace Database
     {
         public DbSet<User> Users { get; set; }
 
-        private readonly IOptions<SystemUserSettings> _sysUser;
+        private readonly SystemUserSettings _sysUser;
 
         public Context(DbContextOptions<Context> options, IOptions<SystemUserSettings> sysUser) : base(options)
         {
-            _sysUser = sysUser;
+            _sysUser = sysUser.Value;
             //Database.EnsureDeleted();
-            Database.EnsureCreated();
+            //Database.EnsureCreated();
+        }
+
+        public Context(DbContextOptions options, IOptions<SystemUserSettings> sysUser) : base(options)
+        {
+            _sysUser = sysUser.Value;
+            //Database.EnsureDeleted();
+            //Database.EnsureCreated();
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -74,11 +81,11 @@ namespace Database
             modelBuilder.Entity<User>().HasData(
                 new User
                 {
-                    Id = _sysUser.Value.UserId,
+                    Id = _sysUser.UserId,
                     LastUpdateTick = 0,
-                    UserName = _sysUser.Value.UserName,
-                    Password = _sysUser.Value.Password,
-                    Admin = _sysUser.Value.IsAdmin,
+                    UserName = _sysUser.UserName,
+                    Password = _sysUser.Password,
+                    Admin = _sysUser.IsAdmin,
                 }
             );
 
