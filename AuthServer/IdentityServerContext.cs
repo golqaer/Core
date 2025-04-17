@@ -1,13 +1,14 @@
-﻿using Database;
-using DTO.AppSettings;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer;
 
-public class IdentityServerContext:Context
+public class IdentityServerContext: IdentityDbContext<ApplicationUser>
 {
-    public IdentityServerContext(DbContextOptions<IdentityServerContext> options, IOptions<SystemUserSettings> sysUser) : base(options, sysUser)
+    public IdentityServerContext(DbContextOptions<IdentityServerContext> options) : base(options)
     {
     }
 

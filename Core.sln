@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTO", "DTO\DTO.csproj", "{9
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{1F020C05-C691-43C2-9176-646A825661F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityServer", "AuthServer\IdentityServer.csproj", "{5F458493-307C-40C8-B4B1-0EDB4EF27E86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "AuthServer\IdentityServer.csproj", "{5F458493-307C-40C8-B4B1-0EDB4EF27E86}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApi", "WebApi", "{9BD9994B-7A6E-4383-9BF3-FCA6D5FC399C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +38,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5F458493-307C-40C8-B4B1-0EDB4EF27E86} = {9BD9994B-7A6E-4383-9BF3-FCA6D5FC399C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {AAE0A96D-031D-4294-B0B2-9369172016DE}

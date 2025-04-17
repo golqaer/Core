@@ -13,7 +13,7 @@ namespace Services;
 
 public static partial class Initializer
 {
-    public static WebApplicationBuilder AddCoreServices<TContext>(this WebApplicationBuilder builder) where TContext : Context
+    private static void CommonAddCoreSerices(WebApplicationBuilder builder)
     {
         builder.Host.UseSerilog();
 
@@ -25,13 +25,30 @@ public static partial class Initializer
             .CreateLogger();
 
         builder.Services.AddControllers();
-        builder.Services.AddDbContext<Context, TContext>(options =>
-            options.UseSqlServer(builder.Configuration["DbConnectionString"]))
+        builder.Services
             .AddEndpointsApiExplorer()
             .AddSwaggerGen()
             .AddHttpContextAccessor()
             .AddServiceInjection()
             ;
+    }
+
+    public static WebApplicationBuilder AddCoreServices(this WebApplicationBuilder builder)
+    {
+        CommonAddCoreSerices(builder);
+        return builder;
+    }
+    public static WebApplicationBuilder AddCoreServices<TDbContext>(this WebApplicationBuilder builder) where TDbContext : Context
+    {
+        builder.AddCoreDbContext<TDbContext>();
+        CommonAddCoreSerices(builder);
+        return builder;
+    }
+
+    public static WebApplicationBuilder AddCoreDbContext<TDbContext>(this WebApplicationBuilder builder) where TDbContext : Context
+    {
+        builder.Services.AddDbContext<Context, TDbContext>(options =>
+            options.UseSqlServer(builder.Configuration["DbConnectionString"]));
 
         return builder;
     }

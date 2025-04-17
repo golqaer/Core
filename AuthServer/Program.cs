@@ -1,7 +1,5 @@
-using Database;
-using DTO.AppSettings;
-using OpenIddict.Abstractions;
-using Services;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using static OpenIddict.Abstractions.OpenIddictConstants;
 
 namespace IdentityServer
@@ -14,9 +12,24 @@ namespace IdentityServer
 
             // Add services to the container.
 
-            builder
-                .AddCoreServices<IdentityServerContext>()
+            builder.Services.AddControllers();
+            builder.Services
+                .AddEndpointsApiExplorer()
+                .AddSwaggerGen()
+                .AddHttpContextAccessor()
                 ;
+
+            builder.Services.AddDbContext<IdentityServerContext>(options =>
+                options.UseSqlServer(builder.Configuration["DbConnectionString"]));
+
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
+                {
+                    opts.Password.RequireDigit = true;
+                    opts.Password.RequiredLength = 8;
+                    opts.User.RequireUniqueEmail = true;
+                })
+                .AddEntityFrameworkStores<IdentityServerContext>()
+                .AddDefaultTokenProviders();
 
             builder.Services.Configure<List<OpenIddictClientDefinition>>(builder.Configuration.GetSection("OpenIddictClients"));
 
@@ -44,6 +57,7 @@ namespace IdentityServer
                     options.SetAuthorizationEndpointUris("/connect/authorize");
                     options.SetTokenEndpointUris("/connect/token");
                     options.SetUserInfoEndpointUris("/connect/userinfo");
+                    options.SetEndSessionEndpointUris("/connect/logout");
 
                     options.AllowAuthorizationCodeFlow()
                         .AllowRefreshTokenFlow()
@@ -62,8 +76,17 @@ namespace IdentityServer
 
             var app = builder.Build();
 
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
+
             app
-                .UserCoreService(app.Environment)
+                .UseHttpsRedirection()
+                .UseAuthorization()
+                .UseRouting()
+                .UseEndpoints(ep => ep.MapControllers())
                 .UseAuthentication()
                 ;
 

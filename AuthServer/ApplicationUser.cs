@@ -2,7 +2,7 @@
 
 namespace IdentityServer;
 
-public class ApplicationUser : IdentityUser<Guid>
+public class ApplicationUser : IdentityUser
 {
-    public string? FullName { get; set; }
+
 }
