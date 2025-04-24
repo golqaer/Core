@@ -22,7 +22,7 @@ namespace IdentityServer
             builder.Services.AddDbContext<IdentityServerContext>(options =>
                 options.UseSqlServer(builder.Configuration["DbConnectionString"]));
 
-            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opts =>
+            builder.Services.AddIdentity<User, IdentityRole>(opts =>
                 {
                     opts.Password.RequireDigit = true;
                     opts.Password.RequiredLength = 8;

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServer;
 
-public class IdentityServerContext: IdentityDbContext<ApplicationUser>
+public class IdentityServerContext: IdentityDbContext<User>
 {
     public IdentityServerContext(DbContextOptions<IdentityServerContext> options) : base(options)
     {

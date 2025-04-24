@@ -2,7 +2,7 @@
 
 namespace IdentityServer;
 
-public class ApplicationUser : IdentityUser
+public class User : IdentityUser
 {
 
 }
